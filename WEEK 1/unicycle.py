@@ -41,16 +41,26 @@ class Unicycle:
         Return:
             x, y, theta (float): final pose 
         """
+        self.v=v
+        self.w=w
+        self.n=n
+        i=0
+        for i in range(n):
+            self.theta+=w*(self.dt)
+            self.x+=v*np.cos(self.theta)*self.dt
+            self.y+=v*np.sin(self.theta)*self.dt
+            self.x_points.append(self.x)
+            self.y_points.append(self.y)
 
-        return x, y, theta
+        List=[self.x,self.y,self.theta]
+        return List
 
     def plot(self, v: float, w: float):
         """Function that plots the intermeditate trajectory of the Robot"""
         plt.title(f"Unicycle Model: {v}, {w}")
         plt.xlabel("X-Coordinates")
         plt.ylabel("Y-Coordinates")
-        plt.plot(self.x_points, self.y_points, color="red", alpha=0.75)
-        plt.grid()
+        plt.plot(self.x_points, self.y_points, color="red", alpha)
 
         # If you want to view the plot uncomment plt.show() and comment out plt.savefig()
         plt.show()
@@ -59,5 +69,18 @@ class Unicycle:
 
 if __name__ == "__main__":
     print("Unicycle Model Assignment")
+    Object1=Unicycle(0,0,0,.1)
+    Final_pose1=Object1.step(1,.5,25)
+    print("The final pose of 1 is:   ",Final_pose1)
+    Object1.plot(1,.5)
+    Object2=Unicycle(0,0,1.57)
+    Final_pose2=Object2.step(.5,1,10)
+    Object2.plot(.5,1)
+    print("The final pose of 2 is:   ",Final_pose2)
+    Object3=Unicycle(0,0,.77)
+    Final_pose3=Object3.step(.5,1,10)
+    Object3.plot(.5,1)
+    print("The final pose of 3 is:   ",Final_pose3)      
+          
 
     # make an object of the robot and plot various trajectories
